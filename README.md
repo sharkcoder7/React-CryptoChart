@@ -1,10 +1,10 @@
-# Crypto Chart
+# Crypto Charts
 > A simple chart created to poll data for Cryptocurrency
 
 [![NPM Version][npm-image]][npm-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 
-![](src/img/chartjs-crypto.jpg)
+![](src/img/chartjs_crypto.jpg)
 
 ## Tech Stack
 * React
