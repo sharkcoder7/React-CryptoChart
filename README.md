@@ -1,4 +1,4 @@
-# Crypto Charts
+# Crypto Chart
 > A simple chart created to poll data for Cryptocurrency
 
 [![NPM Version][npm-image]][npm-url]
@@ -10,6 +10,8 @@
 * React
 * Styled Components
 * Axios
+* JSON Rest API
+* Moment.js
 
 ## Development setup
 
@@ -27,10 +29,6 @@ npm start
     * CHANGE: added dev server
 * 0.0.1
     * initial commit
-
-## Meta
-
-Craig Wheeler | craig@craigwheeler.net
 
 ## Contributing
 

@@ -4,17 +4,19 @@ import './App.css';
 import Chart from './components/Chart';
 import styled from 'styled-components'
 import axios from 'axios';
+import moment from 'moment';
 
+// styled components
 const AppContainer = styled.div`
     background-color: #000;
 `;
 
+// begin react
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       chartData: {},
-      name: '',
     }
   }
 
@@ -24,22 +26,56 @@ class App extends Component {
 
   getChartData() {
     // Ajax call
-    axios.get('https://demo4721833.mockable.io')
+    axios.get('https://api.coindesk.com/v1/bpi/historical/close.json')
       .then(response => {
-        this.setState({
-          name: response.data.name,
-        });
+        const sortedData = [];
+        let count = 0;
+        for (let date in response.data.bpi) {
+          sortedData.push({
+            day: moment(date).format('MMM DD'),
+            price: response.data.bpi[date].toLocaleString('us-EN', {style: 'currency', currency: 'USD'}),
+            x: count, // previous days
+            y: response.data.bpi[date] // numerical price
+          });
+          count++;
+        }
+        //   this.setState({
+        //     chartData: {
+        //       labels: ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"],
+        //       // labels: sortedData.map(data => data.day),
+        //       datasets: [
+        //         {
+        //           data: [100.00, 100.16, 110.34, 120.32, 190.34, 100.27, 160.65],
+        //           // data: sortedData.map(data => data.y),
+        //           label: 'Graph 1',
+        //           backgroundColor: ['rgba(36,186,165, 0.2)',],
+        //           borderColor: ['rgba(0,100,80,1)',],
+        //           borderWidth: 1,
+        //           pointBorderColor: "rgba(75,192,192,1)",
+        //           pointBackgroundColor: "#fff",
+        //           pointBorderWidth: 1,
+        //           pointHoverRadius: 5,
+        //           pointHoverBorderWidth: 2,
+        //           pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        //           pointHoverBorderColor: "rgba(220,220,220,1)",
+        //           pointRadius: 3,
+        //         }
+        //       ]
+        //     }
+        //   })
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
       });
     this.setState({
       chartData: {
-        labels: ['0', '1', '2', '3', '4', '5'],
+        labels: ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"],
+        // labels: sortedData.map(data => data.day),
         datasets: [
           {
-            data: [0, 16, 21, 32, 49, 55, 162, 177, 183, 99, 100],
-            label: 'Teal Graph',
+            data: [100.00, 100.16, 110.34, 120.32, 190.34, 100.27, 160.65],
+            // data: sortedData.map(data => data.y),
+            label: 'Graph 1',
             backgroundColor: ['rgba(36,186,165, 0.2)',],
             borderColor: ['rgba(0,100,80,1)',],
             borderWidth: 1,
@@ -51,29 +87,15 @@ class App extends Component {
             pointHoverBackgroundColor: "rgba(75,192,192,1)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointRadius: 3,
-          },
-          {
-            data: [100, 120, 149, 110, 100, 140, 120, 99, 78, 40, 80],
-            label: 'Gray Graph',
-            backgroundColor: ['rgba(46,54,65, 0.5)',],
-            borderColor: ['rgba(36,186,165,1)',],
-            borderWidth: 1,
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBorderWidth: 2,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointRadius: 3,
-          },
+          }
         ]
       }
     })
   }
 
-
   render() {
+    console.log(this.state.chartData);
+    // console.log(this.state.chartData.datasets[0].data);
     return (<AppContainer>
         <div className="App">
           {/*<header className="App-header">*/}
