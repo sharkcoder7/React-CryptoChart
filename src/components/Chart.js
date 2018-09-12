@@ -6,7 +6,6 @@ class Chart extends Component {
     super(props)
     this.state = {
       chartData: props.chartData,
-      // chartLabels: props.chartLabels
     }
   }
 
