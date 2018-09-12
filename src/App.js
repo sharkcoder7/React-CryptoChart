@@ -1,13 +1,20 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import Chart from './components/Chart'
+import Chart from './components/Chart';
+import styled from 'styled-components'
+import axios from 'axios';
+
+const AppContainer = styled.div`
+    background-color: #000;
+`;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chartData: {}
+      chartData: {},
+      name: '',
     }
   }
 
@@ -16,7 +23,16 @@ class App extends Component {
   }
 
   getChartData() {
-    // Ajax call here
+    // Ajax call
+    axios.get('https://demo4721833.mockable.io')
+      .then(response => {
+        this.setState({
+          name: response.data.name,
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
     this.setState({
       chartData: {
         labels: ['0', '1', '2', '3', '4', '5'],
@@ -58,17 +74,18 @@ class App extends Component {
 
 
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Chart chartData={this.state.chartData}/>
-      </div>
+    return (<AppContainer>
+        <div className="App">
+          {/*<header className="App-header">*/}
+          {/*<img src={logo} className="App-logo" alt="logo"/>*/}
+          {/*<h1 className="App-title">Welcome to React</h1>*/}
+          {/*</header>*/}
+          {/*<p className="App-intro">*/}
+          {/*To get started, edit <code>src/App.js</code> and save to reload.*/}
+          {/*</p>*/}
+          <Chart chartData={this.state.chartData}/>
+        </div>
+      </AppContainer>
     );
   }
 }
